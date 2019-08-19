@@ -20,6 +20,8 @@ import PersonasContainer from './hApps/personas-profiles/containers/personasCont
 import PersonaContainer from './hApps/personas-profiles/containers/personaContainer'
 import ProfileContainer from './hApps/personas-profiles/containers/profileContainer'
 import ProfilesContainer from './hApps/personas-profiles/containers/profilesContainer'
+import DeepKeyOverviewContainer from './hApps/deepkey/containers/deepKeyContainer'
+
 const drawerWidth = 240
 
 const useStyles = makeStyles(theme => ({
@@ -75,6 +77,12 @@ function Navigation(props) {
       <List>
           <Route render={({ history}) => (
             <div>
+              <ListItem button onClick={() => { handleClickListItem(history,'/deepkey') }}>
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary='Deep Key' />
+              </ListItem>
               <ListItem button onClick={() => { handleClickListItem(history, '/personas') }}>
                 <ListItemIcon>
                   <PersonIcon />
@@ -165,10 +173,12 @@ function Navigation(props) {
         <Route exact path='/profile/:hash/:returnUrl' render={ props =>
           <ProfileContainer {...props} />
         } />
+        <Route path='/deepkey' component={DeepKeyOverviewContainer} />
         <Route exact path='/' render={ props =>
           <div>
             <PersonasContainer {...props} />
             <ProfilesContainer {...props} />
+            <DeepKeyOverviewContainer {...props} />
           </div>
         } />
       </main>

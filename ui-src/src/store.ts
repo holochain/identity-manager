@@ -3,10 +3,11 @@ import { holochainMiddleware } from '@holochain/hc-redux-middleware'
 import { connect } from '@holochain/hc-web-client'
 import login from './hApps/login/reducer'
 import personasProfiles from './hApps/personas-profiles/reducer'
+import deepKey from './hApps/deepkey/reducer'
 
 
 const REACT_APP_CHAT_WEBSOCKET_INTERFACE = process.env.REACT_APP_CHAT_WEBSOCKET_INTERFACE
-let rootReducer = combineReducers({ login: login, personasProfiles: personasProfiles })
+let rootReducer = combineReducers({ login: login, personasProfiles: personasProfiles, deepKey: deepKey })
 let middleware: Array<any>
 if (REACT_APP_CHAT_WEBSOCKET_INTERFACE) {
   middleware = [holochainMiddleware(connect({ url: REACT_APP_CHAT_WEBSOCKET_INTERFACE }))]

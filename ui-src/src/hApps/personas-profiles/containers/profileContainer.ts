@@ -1,4 +1,3 @@
-
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { Profile as ProfileType, ProfileField } from '../types/profile'
