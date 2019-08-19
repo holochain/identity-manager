@@ -4,8 +4,10 @@ import { MemoryRouter } from 'react-router-dom'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { withNotes } from '@storybook/addon-notes'
+import { specs } from 'storybook-addon-specifications'
 import LoginForm, { Props } from './login'
 import keygenNotes from './keygen.md'
+import { loginTests } from './login.test'
 import CreateStore from '../../../store'
 
 let store = CreateStore()
@@ -18,7 +20,7 @@ storiesOf('KeyGen', module)
     <Provider store={store}><MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter></Provider>
   ))
   .add('Holo', withNotes(keygenNotes)(() => {
-    // specs(() => personaTests)
+    specs(() => loginTests)
     return <LoginForm {...props}/>
   })
 )

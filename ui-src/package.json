@@ -51,7 +51,12 @@
     "@storybook/addon-notes": "^5.1.11",
     "@storybook/addons": "^5.1.11",
     "@storybook/react": "^5.1.11",
+    "@types/enzyme": "^3.10.3",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/react-router-dom": "^4.3.4",
-    "babel-loader": "^8.0.6"
+    "babel-loader": "^8.0.6",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "storybook-addon-specifications": "^2.1.3"
   }
 }

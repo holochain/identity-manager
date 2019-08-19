@@ -92,7 +92,7 @@ class LoginForm extends React.Component<Props & RouterProps, State> {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button id='Agree' onClick={() => this.handleSubmit()} color='primary'>
+            <Button name='submit' onClick={() => this.handleSubmit()} color='primary'>
               Log In
             </Button>
           </DialogActions>
