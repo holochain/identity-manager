@@ -47,5 +47,8 @@ export const loginTests = describe('Holo', () => {
     let createdLogin: LoginType = (loginView().find('LoginForm').instance().state as State).login
     expect(createdLogin).toEqual(testLogin)
     expect(props.login).toBeCalled()
+
+    loginView().find('input[name="email"]').simulate('change', { target: { value: '' } })
+    loginView().find('input[name="password"]').simulate('change', { target: { value: '' } })
   })
 })

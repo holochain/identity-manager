@@ -5,11 +5,11 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Login as LoginType } from '../types/login'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Typography from '@material-ui/core/Typography';
 
 export interface OwnProps {
   classes?: any
@@ -34,8 +34,8 @@ const styles = ({ palette }: Theme) => createStyles({
     flexDirection: 'column',
     backgroundColor: palette.background.default,
     color: palette.primary.main,
-  },
-});
+  }
+})
 
 class LoginForm extends React.Component<Props & RouterProps, State> {
 
@@ -76,27 +76,34 @@ class LoginForm extends React.Component<Props & RouterProps, State> {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <Dialog open={true}>
-          <DialogTitle id='alert-dialog-slide-title'>
-            Generate Your Holo Keys
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
+        <Card className={classes.card}>
+          <CardMedia
+            component="img"
+            alt="Holo Logo"
+            height="240"
+            image="holo-dots.png"
+            title="Holo Logo"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              Generate Your Holo Keys
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
             Welcome to the Agent Centric Web where you are in control of your personal data.
             Use the same email password combination to access all of your Holo Apps and keep your
             personal data safe and private.
-            </DialogContentText>
+            </Typography>
             <div>
               <TextField name='email' value={this.state.login.email} onChange={e => this.updateEmail(e.target.value)} label='Email'/>
               <TextField name='password' value={this.state.login.password} onChange={e => this.updatePassword(e.target.value)} label='Password'/>
             </div>
-          </DialogContent>
-          <DialogActions>
+          </CardContent>
+          <CardActions>
             <Button name='submit' onClick={() => this.handleSubmit()} color='primary'>
               Log In
             </Button>
-          </DialogActions>
-        </Dialog>
+          </CardActions>
+        </Card>
       </div>
     )
   }

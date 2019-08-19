@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import LoginForm, { Props, StateProps, DispatchProps, RouterProps } from '../components/login'
+import LoginForm, { StateProps, DispatchProps } from '../components/login'
 import { Dispatch } from 'redux'
 import {
   Login
