@@ -4,14 +4,13 @@ import { MemoryRouter } from 'react-router-dom'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { specs } from 'storybook-addon-specifications'
-import { withNotes } from '@storybook/addon-notes'
-import Persona from './persona'
+import Persona from '../persona'
 import newPersonaNotes from './newPersona.md'
 import editPersonaNotes from './threePersonas.md'
 import { newPersonaTests } from './newPersona.test'
 import { editPersonaTests } from './editPersona.test'
-import CreateStore from '../../../../store'
-import { Persona as PersonaType } from '../../types/persona'
+import CreateStore from '../../../../../store'
+import { Persona as PersonaType } from '../../../types/persona'
 
 let store = CreateStore()
 
@@ -34,15 +33,20 @@ let editPersona: PersonaType = {
 }
 
 storiesOf('Persona', module)
-  .add('New Persona', withNotes(newPersonaNotes)(() => {
-    specs(() => newPersonaTests)
-    return getPersona(newPersona)
-  }))
-  .add('Edit Existing Persona', withNotes(editPersonaNotes)(() => {
-    specs(() => editPersonaTests)
-    return getPersona(editPersona)
-  })
-)
+.add('New Persona', () => {
+  specs(() => newPersonaTests)
+  return getPersona(newPersona)
+},
+{
+  notes: { markdown: newPersonaNotes }
+})
+.add('Edit Persona', () => {
+  specs(() => editPersonaTests)
+  return getPersona(editPersona)
+},
+{
+  notes: { markdown: editPersonaNotes }
+})
 
 function getPersona (persona: PersonaType) {
   return (

@@ -4,14 +4,14 @@ import { storiesOf } from '@storybook/react'
 import { MemoryRouter } from 'react-router-dom'
 import { specs } from 'storybook-addon-specifications'
 import { withNotes } from '@storybook/addon-notes'
-import Profile, { Props } from './profile'
+import Profile, { Props } from '../profile'
 import profileNotMappedNoDefaults from './profileNotMappedNoDefaults.md'
 import profileNotMappedNoDefaultsManualMap from './profileNotMappedNoDefaultsManualMap.md'
 import profileNotMappedHasDefaults from './profileNotMappedHasDefaults.md'
 import profileMapped from './profileMapped.md'
 import profileFaultyMapping from './profileFaultyMapping.md'
 import { profileTests } from './profile.test'
-import * as constants from '../../constants'
+import * as constants from '../../../constants'
 
 const mockFn = jest.fn()
 const mockPromise = jest.fn(() => Promise.reject('Storybook mock function'))

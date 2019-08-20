@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { mount, configure as enzymeConfigure, ReactWrapper } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import * as constants from '../../constants'
-import Profiles, { Props } from './profiles'
+import * as constants from '../../../constants'
+import Profiles, { Props } from '../profiles'
 import { MemoryRouter } from 'react-router-dom'
 
 enzymeConfigure({ adapter: new Adapter() })

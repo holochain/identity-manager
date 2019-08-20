@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { mount, configure as enzymeConfigure, ReactWrapper } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import * as constants from '../../constants'
-import FieldMapper, { Props, State } from './fieldMapper'
-import { UsageType } from '../../types/profile'
+import * as constants from '../../../constants'
+import FieldMapper, { Props, State } from '../fieldMapper'
+import { UsageType } from '../../../types/profile'
 import Person from '@material-ui/icons/Person'
-import AutoCompleteProfileField from './autoCompleteProfileField'
 
 enzymeConfigure({ adapter: new Adapter() })
 

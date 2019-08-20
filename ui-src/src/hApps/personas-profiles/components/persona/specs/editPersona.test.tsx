@@ -1,9 +1,9 @@
 import * as React from 'react'
-import Persona, { PersonaBase, State, Props } from './persona'
-import { Persona as PersonaType } from '../../types/persona'
+import Persona, { PersonaBase, State, Props } from '../persona'
+import { Persona as PersonaType } from '../../../types/persona'
 import { mount, configure as enzymeConfigure, ReactWrapper } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import CreateStore from '../../../../store'
+import CreateStore from '../../../../../store'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 

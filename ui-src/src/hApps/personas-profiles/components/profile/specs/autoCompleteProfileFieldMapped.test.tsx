@@ -1,16 +1,16 @@
 import * as React from 'react'
-import AutoCompleteProfileField, { State, Props } from './autoCompleteProfileField'
+import AutoCompleteProfileField, { State, Props } from '../autoCompleteProfileField'
 import { mount, configure as enzymeConfigure, ReactWrapper } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import * as constants from '../../constants'
-import { Suggestion as SuggestionType } from '../../types/suggestion'
+import * as constants from '../../../constants'
+import { Suggestion as SuggestionType } from '../../../types/suggestion'
 import { TextField } from '@material-ui/core/'
 import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
 
 enzymeConfigure({ adapter: new Adapter() })
 
-export const autoCompleteProfileFieldTests = describe('Selecting Persona values to create a Profile Mapping', () => {
+export const autoCompleteProfileFieldMappedTests = describe('Autocomplete Profile Field mapped to Persona data', () => {
 
   let props: Props
   let mountedAutoCompleteProfileField: ReactWrapper<Props, State> | undefined
@@ -27,32 +27,6 @@ export const autoCompleteProfileFieldTests = describe('Selecting Persona values 
   })
 
   const mockFn = jest.fn()
-
-  it('Display the Profile Field for an unmapped field with no default that stores your data in the hApp DHT', () => {
-
-    props = {
-      personas: constants.personas,
-      selectedPersona: constants.personas[0],
-      profile: constants.exampleProfileNotMappedNoDefaults,
-      field: constants.exampleProfileNotMappedNoDefaults.fields[0],
-      handleMappingChange: mockFn
-    }
-    expect(autoCompleteProfileField().find(TextField).props().label).toEqual('Genre')
-    expect(autoCompleteProfileField().find(Typography).text()).toEqual('Default - genre')
-  })
-
-  it('Display the Profile Field for an unmapped field with no default that displays your data from your Vault', () => {
-
-    props = {
-      personas: constants.personas,
-      selectedPersona: constants.personas[0],
-      profile: constants.exampleProfileNotMappedNoDefaults,
-      field: constants.exampleProfileNotMappedNoDefaults.fields[1],
-      handleMappingChange: mockFn
-    }
-    expect(autoCompleteProfileField().find(TextField).props().label).toEqual('No Default Value')
-    expect(autoCompleteProfileField().find(Typography).text()).toEqual('Default - no_default')
-  })
 
   it('Display the Profile Field for a mapped field that stores your data in the hApp DHT', () => {
 
