@@ -4,6 +4,8 @@ import Adapter from 'enzyme-adapter-react-16'
 import * as constants from '../../constants'
 import FieldMapper, { Props, State } from './fieldMapper'
 import { UsageType } from '../../types/profile'
+import Person from '@material-ui/icons/Person'
+import AutoCompleteProfileField from './autoCompleteProfileField'
 
 enzymeConfigure({ adapter: new Adapter() })
 
@@ -23,8 +25,6 @@ export const fieldMapperTests = describe('FieldMapper', () => {
     mountedFieldMapper = undefined
   })
 
-  // const mockFn = jest.fn()
-
   it('Clicking the Persona Icon opens the power user tools', () => {
     const selectedPersona = constants.personas[0]
     const field = constants.exampleProfile.fields[1] // first_name
@@ -34,7 +34,7 @@ export const fieldMapperTests = describe('FieldMapper', () => {
       personas: constants.personas,
       selectedPersona
     }
-    fieldMapper().find('Person').simulate('click')
+    fieldMapper().find(Person).simulate('click')
     expect((fieldMapper().find('FieldMapper').instance().state as State).expansionPanelOpen).toEqual(true)
   })
 
@@ -85,7 +85,7 @@ export const fieldMapperTests = describe('FieldMapper', () => {
       selectedPersona
     }
     expect(fieldMapper().find('input[name="personaAutoText"]').props().value).toEqual(constants.personas[3].name)
-    expect(fieldMapper().find('TextField[name="field"]').props().value).toEqual(constants.personas[3].fields[0].name)
+    expect(fieldMapper().find('input[name="field"]').props().value).toEqual(constants.personas[3].fields[0].name)
     // @ts-ignore
     expect(fieldMapper().find('AutoCompleteProfileField').instance().state.value).toEqual(constants.personas[3].fields[0].data)
   })
@@ -100,7 +100,7 @@ export const fieldMapperTests = describe('FieldMapper', () => {
       selectedPersona
     }
     expect(fieldMapper().find('input[name="personaAutoText"]').props().value).toEqual(constants.personas[0].name)
-    expect(fieldMapper().find('TextField[name="field"]').props().value).toEqual(constants.personas[0].fields[0].name)
+    expect(fieldMapper().find('input[name="field"]').props().value).toEqual(constants.personas[0].fields[0].name)
     // @ts-ignore
     expect(fieldMapper().find('AutoCompleteProfileField').instance().state.value).toEqual(constants.personas[0].fields[0].data)
   })
@@ -115,7 +115,7 @@ export const fieldMapperTests = describe('FieldMapper', () => {
       selectedPersona
     }
     expect(fieldMapper().find('input[name="personaAutoText"]').props().value).toEqual(constants.personas[0].name)
-    expect(fieldMapper().find('TextField[name="field"]').props().value).toEqual(field.name)
+    expect(fieldMapper().find('input[name="field"]').props().value).toEqual(field.name)
     // @ts-ignore
     expect(fieldMapper().find('AutoCompleteProfileField').instance().state.value).toEqual('')
   })

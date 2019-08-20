@@ -5,6 +5,9 @@ import * as constants from '../../constants'
 import Profile, { ProfileBase, Props, State } from './profile'
 import { Profile as ProfileType } from '../../types/profile'
 import { MemoryRouter } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
+import MenuItem from '@material-ui/core/MenuItem'
+
 enzymeConfigure({ adapter: new Adapter() })
 
 export const profileTests = describe('', () => {
@@ -12,7 +15,7 @@ export const profileTests = describe('', () => {
   let props: Props
   let mountedProfile: ReactWrapper<Props, {}> | undefined
 
-  const profileField = () => {
+  const profileForm = () => {
     if (!mountedProfile) {
       mountedProfile = mount(<MemoryRouter initialEntries={['/']}><Profile {...props}/></MemoryRouter>)
     }
@@ -37,8 +40,8 @@ export const profileTests = describe('', () => {
       getPersonas: mockPromise,
       setCurrentPersona: mockFn
     }
-    expect(profileField().find('AutoCompleteProfileField').length).toEqual(constants.exampleProfileNotMappedNoDefaults.fields.length)
-    profileField().find('input[name="name"]').map(function (field) {
+    expect(profileForm().find('AutoCompleteProfileField').length).toEqual(constants.exampleProfileNotMappedNoDefaults.fields.length)
+    profileForm().find('input[name="name"]').map(function (field) {
       expect(field.props().value).toEqual('')
     })
   })
@@ -54,8 +57,8 @@ export const profileTests = describe('', () => {
       getPersonas: mockPromise,
       setCurrentPersona: mockFn
     }
-    expect(profileField().find('AutoCompleteProfileField').length).toEqual(constants.exampleProfile.fields.length)
-    let fields = profileField().find('input[name="name"]')
+    expect(profileForm().find('AutoCompleteProfileField').length).toEqual(constants.exampleProfile.fields.length)
+    let fields = profileForm().find('input[name="name"]')
     expect(fields.first().props().value).toEqual('')
     expect(fields.at(1).props().value).toEqual('')
     expect(fields.last().props().value).toEqual('Beadle') // not mapped sop gets default
@@ -72,8 +75,8 @@ export const profileTests = describe('', () => {
       getPersonas: mockPromise,
       setCurrentPersona: mockFn
     }
-    expect(profileField().find('AutoCompleteProfileField').length).toEqual(constants.exampleProfile.fields.length)
-    profileField().find('input[name="name"]').map(function (field) {
+    expect(profileForm().find('AutoCompleteProfileField').length).toEqual(constants.exampleProfile.fields.length)
+    profileForm().find('input[name="name"]').map(function (field) {
       expect(field.props().value).not.toEqual(undefined)
       expect(field.props().value).not.toEqual('')
     })
@@ -90,13 +93,13 @@ export const profileTests = describe('', () => {
       getPersonas: mockPromise,
       setCurrentPersona: mockFn
     }
-    let profile: ProfileType = (profileField().find('Profile').instance().state as State).profile
+    let profile: ProfileType = (profileForm().find('Profile').instance().state as State).profile
     expect(profile.fields[0].mapping).toEqual(undefined)
-    profileField().find('input[name="name"]').first().simulate('change', { target: { value: '@' } })
-    profileField().find('input[name="name"]').first().simulate('focus')
-    profileField().find('MenuItem').first().simulate('click')
-    profileField().find('input[name="name"]').first().simulate('blur')
-    profile = (profileField().find('Profile').instance().state as State).profile
+    profileForm().find('input[name="name"]').first().simulate('change', { target: { value: '@' } })
+    profileForm().find('input[name="name"]').first().simulate('focus')
+    profileForm().find(MenuItem).first().simulate('click')
+    profileForm().find('input[name="name"]').first().simulate('blur')
+    profile = (profileForm().find('Profile').instance().state as State).profile
     expect(profile.fields[0].mapping).not.toEqual(undefined)
   })
 
@@ -112,7 +115,7 @@ export const profileTests = describe('', () => {
       setCurrentPersona: mockFn
     }
 
-    profileField().find('Button').simulate('click')
+    profileForm().find(Button).simulate('click')
     expect(props.save).toBeCalled()
   })
 
@@ -127,9 +130,9 @@ export const profileTests = describe('', () => {
       getPersonas: mockPromise,
       setCurrentPersona: mockFn
     }
-    profileField().find('input[name="name"]').first().simulate('change', { target: { value: 'Techno' } })
-    profileField().find('input[name="name"]').first().simulate('focus')
-    profileField().find('input[name="name"]').first().simulate('blur')
+    profileForm().find('input[name="name"]').first().simulate('change', { target: { value: 'Techno' } })
+    profileForm().find('input[name="name"]').first().simulate('focus')
+    profileForm().find('input[name="name"]').first().simulate('blur')
   })
 
   it('Check getDerivedStateFromProps returns null when props dont set a profile', () => {

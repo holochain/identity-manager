@@ -1,0 +1,26 @@
+{
+  "name": "personas-profiles",
+  "version": "0.1.6",
+  "description": "A Holochain app (hApp) for managing your personal private information.",
+  "scripts": {
+    "hc:dna:agent1": "cd dna && echo $(cat personas-profiles.dna.json | jq '.name = \"Agent1\"') > personas-profiles-agent1.dna.json",
+    "hc:dna:agent2": "cd dna && echo $(cat ./personas-profiles.dna.json | jq '.name = \"Agent2\"') > personas-profiles-agent2.dna.json",
+    "hc:dna:agent3": "cd dna && echo $(cat ./personas-profiles.dna.json | jq '.name = \"Agent3\"') > personas-profiles-agent3.dna.json",
+    "hc:dna:agent4": "cd dna && echo $(cat ./personas-profiles.dna.json | jq '.name = \"Agent4\"') > personas-profiles-agent4.dna.json",
+    "hc:build": "echo `pwd` && rm -rf tmp-storage && mkdir -p dna && cd dna-src && hc package --strip-meta -o ../dna/personas-profiles.dna.json && npm run hc:dna:agent1 && npm run hc:dna:agent2 && npm run hc:dna:agent3 && npm run hc:dna:agent4",
+    "hc:start": "mkdir -p tmp-storage && holochain -c ./conductor-config.toml",
+    "hc:test": "cd dna-src && hc test",
+    "prerelease": "rm -rf ./release && cd ui-src && npm run clean && npm run build && cd .. && npm run hc:test && npm run hc:build && mkdir -p ./release && mv ./ui ./release/ui && mv ./dna ./release/dna && cp ./my-conductor-config.toml ./release/my-conductor-config.toml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://willemolding@github.com/holochain/holochain-ui.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/holochain/holochain-ui/issues"
+  },
+  "homepage": "https://github.com/holochain/holochain-ui#readme",
+  "dependencies": {
+  }
+}
