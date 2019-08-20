@@ -10,15 +10,17 @@ import profileNotMappedNoDefaultsManualMap from './profileNotMappedNoDefaultsMan
 import profileNotMappedHasDefaults from './profileNotMappedHasDefaults.md'
 import profileMapped from './profileMapped.md'
 import profileFaultyMapping from './profileFaultyMapping.md'
-import { profileTests } from './profile.test'
+import { profileNotMappedNoMatchTests } from './profileNotMappedNoMatch.test'
+import { profileNotMappedHasMatchTests } from './profileNotMappedHasMatch.test'
+import { profileMappedTests } from './profileMapped.test'
 import * as constants from '../../../constants'
 
 const mockFn = jest.fn()
 const mockPromise = jest.fn(() => Promise.reject('Storybook mock function'))
 
 storiesOf('Profile', module)
-  .add('Not mapped no defaults', withNotes(profileNotMappedNoDefaults)(() => {
-    specs(() => profileTests)
+  .add('Not mapped no defaults', () => {
+    specs(() => profileNotMappedNoMatchTests)
     let props: Props
     props = {
       returnUrl: '',
@@ -31,9 +33,11 @@ storiesOf('Profile', module)
       setCurrentPersona: mockFn
     }
     return <MemoryRouter initialEntries={['/']}><Profile {...props} /></MemoryRouter>
-  }))
-  .add('Not mapped no defaults manual mapping', withNotes(profileNotMappedNoDefaultsManualMap)(() => {
-    specs(() => profileTests)
+  },
+  {
+    notes: { markdown: profileNotMappedNoDefaults }
+  })
+  .add('Not mapped no defaults manual mapping', () => {
     let props: Props
     props = {
       returnUrl: '',
@@ -46,9 +50,14 @@ storiesOf('Profile', module)
       setCurrentPersona: mockFn
     }
     return <MemoryRouter initialEntries={['/']}><Profile {...props} /></MemoryRouter>
-  }))
+  },
+  {
+    notes: { markdown: profileNotMappedNoDefaultsManualMap }
+  })
+
+
   .add('Not mapped has matching defaults', withNotes(profileNotMappedHasDefaults)(() => {
-    specs(() => profileTests)
+    specs(() => profileNotMappedHasMatchTests)
     let props: Props
     props = {
       returnUrl: '',
@@ -63,7 +72,7 @@ storiesOf('Profile', module)
     return <MemoryRouter initialEntries={['/']}><Profile {...props} /></MemoryRouter>
   }))
   .add('Mapped to Persona info', withNotes(profileMapped)(() => {
-    specs(() => profileTests)
+    specs(() => profileMappedTests)
     let props: Props
     props = {
       returnUrl: '',
@@ -78,7 +87,6 @@ storiesOf('Profile', module)
     return <MemoryRouter initialEntries={['/']}><Profile {...props} /></MemoryRouter>
   }))
   .add('Faulty mapping', withNotes(profileFaultyMapping)(() => {
-    specs(() => profileTests)
     let props: Props
     props = {
       returnUrl: '',

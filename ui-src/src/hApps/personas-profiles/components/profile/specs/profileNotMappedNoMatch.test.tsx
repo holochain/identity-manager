@@ -10,7 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 
 enzymeConfigure({ adapter: new Adapter() })
 
-export const profileTests = describe('', () => {
+export const profileNotMappedNoMatchTests = describe('Not mapped no defaults', () => {
 
   let props: Props
   let mountedProfile: ReactWrapper<Props, {}> | undefined
@@ -43,42 +43,6 @@ export const profileTests = describe('', () => {
     expect(profileForm().find('AutoCompleteProfileField').length).toEqual(constants.exampleProfileNotMappedNoDefaults.fields.length)
     profileForm().find('input[name="name"]').map(function (field) {
       expect(field.props().value).toEqual('')
-    })
-  })
-
-  it('When an invalid mapping is used, the Profile has an empty AutoCompleteProfileField for each field in the Profile request', () => {
-    props = {
-      returnUrl: '',
-      personas: constants.personas,
-      selectedPersona: constants.personas[0],
-      profile: constants.exampleFaultyProfile,
-      save: mockPromise,
-      getProfiles: mockPromise,
-      getPersonas: mockPromise,
-      setCurrentPersona: mockFn
-    }
-    expect(profileForm().find('AutoCompleteProfileField').length).toEqual(constants.exampleProfile.fields.length)
-    let fields = profileForm().find('input[name="name"]')
-    expect(fields.first().props().value).toEqual('')
-    expect(fields.at(1).props().value).toEqual('')
-    expect(fields.last().props().value).toEqual('Beadle') // not mapped sop gets default
-  })
-
-  it('When an valid mapping is used, the Profile form has a populated AutoCompleteProfileField for each field in the Profile request', () => {
-    props = {
-      returnUrl: '',
-      personas: constants.personas,
-      selectedPersona: constants.personas[0],
-      profile: constants.exampleProfileMappedCorrectly,
-      save: mockPromise,
-      getProfiles: mockPromise,
-      getPersonas: mockPromise,
-      setCurrentPersona: mockFn
-    }
-    expect(profileForm().find('AutoCompleteProfileField').length).toEqual(constants.exampleProfile.fields.length)
-    profileForm().find('input[name="name"]').map(function (field) {
-      expect(field.props().value).not.toEqual(undefined)
-      expect(field.props().value).not.toEqual('')
     })
   })
 
@@ -153,6 +117,7 @@ export const profileTests = describe('', () => {
     let newState = ProfileBase.getDerivedStateFromProps(props, prevState)
     expect(newState).toEqual(null)
   })
+
   it('Check getDerivedStateFromProps returns correct state update when props set a profile', () => {
     props = {
       returnUrl: '',
