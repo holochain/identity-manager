@@ -10,7 +10,17 @@ const REACT_APP_CHAT_WEBSOCKET_INTERFACE = process.env.REACT_APP_CHAT_WEBSOCKET_
 let rootReducer = combineReducers({ login: login, personasProfiles: personasProfiles, deepKey: deepKey })
 let middleware: Array<any>
 if (REACT_APP_CHAT_WEBSOCKET_INTERFACE) {
-  middleware = [holochainMiddleware(connect({ url: REACT_APP_CHAT_WEBSOCKET_INTERFACE }))]
+  middleware = [holochainMiddleware(
+    connect({ url: REACT_APP_CHAT_WEBSOCKET_INTERFACE }).then(({ onSignal }) => {
+      onSignal((signal) => {
+        console.log(JSON.stringify(signal.signal))
+        if (signal.signal.name === 'open_profile') {
+          console.log(JSON.stringify(signal.signal.name))
+          const {profileSourceDna} = JSON.parse(signal.signal.arguments)
+          console.log(JSON.parse(signal.signal.arguments))
+        }
+    })
+  )]
 } else {
   middleware = [holochainMiddleware(connect())]
 }
