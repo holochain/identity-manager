@@ -122,7 +122,7 @@ function Navigation(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Holochain Identity Manager
+            Holochain Identity Manager 
           </Typography>
         </Toolbar>
       </AppBar>

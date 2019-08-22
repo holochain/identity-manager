@@ -25,6 +25,7 @@
     "typescript": "3.5.3"
   },
   "scripts": {
+    "ui:start": "REACT_APP_PERSONAS_WEBSOCKET_INTERFACE='ws://localhost:5401' PORT=4001 react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -53,6 +54,7 @@
     "@storybook/addon-actions": "^5.1.11",
     "@storybook/addon-links": "^5.1.11",
     "@storybook/addon-notes": "^5.1.11",
+    "@storybook/addon-viewport": "^5.1.11",
     "@storybook/addons": "^5.1.11",
     "@storybook/react": "^5.1.11",
     "@storybook/storybook-deployer": "^2.8.1",

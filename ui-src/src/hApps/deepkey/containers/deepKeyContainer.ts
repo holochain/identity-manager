@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { KeyParams, RevParams, AuthParams } from '../types/deepKey' // Agent,
+import { KeyParams } from '../types/deepKey' // Agent,
 import DeepKeyOverview, { StateProps, DispatchProps } from '../components/deepKeyOverview'
 import {
 	IsInitialized,
   GetRevocationRules,
-  UpdateRevocationRules,
-  SetAuthorizer,
+  // UpdateRevocationRules,
+  // SetAuthorizer,
 	GetAuthorizer,
 	GetAllKeys,
 	UpdateKey,
@@ -17,10 +17,10 @@ import {
 // const mapStateToProps = ({ isInitialized, revocationKey, allKeys }: { isInitialized:boolean, revocationKey:string, allKeys:any }): StateProps => ({  isInitialized, revocationKey, allKeys })
 const mapStateToProps = (state: any): StateProps => {
   return {
-    isInitialized: state.deepKey.isInitialized,
-    revocationRuleSet: state.deepKey.revocationRuleSet,
-    authorizerKeySet: state.deepKey.authorizerKeySet,
-    allKeys: state.deepKey.deepkey.allKeys
+    isInitialized: state.deepkey.deepkey.isInitialized,
+    revocationRuleSet: state.deepkey.deepkey.revocationRuleSet,
+    authorizerKeySet: state.deepkey.deepkey.authorizerKeySet,
+    allKeys: state.deepkey.deepkey.allKeys
   }
 }
 

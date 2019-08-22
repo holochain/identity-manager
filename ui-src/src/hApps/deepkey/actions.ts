@@ -5,21 +5,21 @@ import { Hash, Address, Signature, Rule, Authorizer, KeyMeta } from './types/dee
 
 /*----------  DeepKey Actions  ----------*/
 
-export const IsInitialized = createHolochainZomeCallAsyncAction<{}, boolean>(`dpki_happ`, 'dpki', 'is_initialized')
+export const IsInitialized = createHolochainZomeCallAsyncAction<{}, boolean>('dpki_happ', 'dpki', 'is_initialized')
 
-export const GetRevocationRules = createHolochainZomeCallAsyncAction<{}, Array<{address: Address, entry: Rule}>>(`dpki_happ`, 'dpki', 'get_rules')
+export const GetRevocationRules = createHolochainZomeCallAsyncAction<{}, Array<{address: Address, entry: Rule}>>('dpki_happ', 'dpki', 'get_rules')
 
-export const UpdateRevocationRules = createHolochainZomeCallAsyncAction<{revocationKey: Hash, signedOldRevocationKey: Signature}, Address>(`dpki_happ`, 'dpki', 'update_rules')
+export const UpdateRevocationRules = createHolochainZomeCallAsyncAction<{revocationKey: Hash, signedOldRevocationKey: Signature}, Address>('dpki_happ', 'dpki', 'update_rules')
 
-export const SetAuthorizer = createHolochainZomeCallAsyncAction<{authorizationKeyPath: number, signedAuthKey: Signature}, Address>(`dpki_happ`, 'dpki', 'set_authorizor')
+export const SetAuthorizer = createHolochainZomeCallAsyncAction<{authorizationKeyPath: number, signedAuthKey: Signature}, Address>('dpki_happ', 'dpki', 'set_authorizor')
 
-export const GetAuthorizer = createHolochainZomeCallAsyncAction<{}, Authorizer>(`dpki_happ`, 'dpki', 'get_authorizor')
+export const GetAuthorizer = createHolochainZomeCallAsyncAction<{}, Authorizer>('dpki_happ', 'dpki', 'get_authorizor')
 
-export const GetAllKeys = createHolochainZomeCallAsyncAction<{}, Array<KeyMeta>>(`dpki_happ`, 'dpki', 'get_all_keys')
+export const GetAllKeys = createHolochainZomeCallAsyncAction<{}, Array<KeyMeta>>('dpki_happ', 'dpki', 'get_all_keys')
 
-export const UpdateKey = createHolochainZomeCallAsyncAction<{oldKey: Hash, signedOldKey: Signature, context?: String}, Address>(`dpki_happ`, 'dpki', 'update_key')
+export const UpdateKey = createHolochainZomeCallAsyncAction<{oldKey: Hash, signedOldKey: Signature, context?: String}, Address>('dpki_happ', 'dpki', 'update_key')
 
-export const DeleteKey = createHolochainZomeCallAsyncAction<{oldKey: Hash, signedOldKey: Signature}, Address>(`dpki_happ`, 'dpki', 'delete_key')
+export const DeleteKey = createHolochainZomeCallAsyncAction<{oldKey: Hash, signedOldKey: Signature}, Address>('dpki_happ', 'dpki', 'delete_key')
 
 /*----------  Conductor ADMIN Actions  ----------*/
 
@@ -31,7 +31,7 @@ export const GetAgentList = createHolochainZomeCallAsyncAction<{}, Array<any>>('
 //   return new Promise((resolve, reject) => {
 //     let result:any
 //     connect().then(async({call, close}) => {
-//       result = await call(`admin/agent/${adminCommand}`)(args)
+//       result = await call('admin/agent/${adminCommand}`)(args)
 //       const error = get('Err', JSON.parse(result)) || get('SerializationError ', JSON.parse(result))
 
 //       console.log("!! MADE ADMIN CONDUCTOR CALL. Here is the parsed result : ", JSON.parse(result))

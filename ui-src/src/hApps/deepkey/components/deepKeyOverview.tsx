@@ -27,7 +27,7 @@ export interface OwnProps {
 
 export interface StateProps {
   isInitialized: boolean,
-  revocationRuleSet: Rule,
+  revocationRuleSet?: Rule,
   authorizerKeySet: Authorizer,
   allKeys: Array<Key>
 }
@@ -51,14 +51,29 @@ class DeepKeyOverview extends React.Component<Props, {}> {
   //     .catch((reason: any) => { console.log('HC ZOMECALL ERROR: ', JSON.stringify(reason)) })
   // }
 
-  // componentDidMount () {
-  //   this.makeZomeCall('fetchRevocationRules')
-  //   this.makeZomeCall('fetchAuthorizer')
-  //   this.makeZomeCall('fetchIsInitialized')
-  //   this.makeZomeCall('fetchAllKeys')
-  //
-  //   console.log('this.props', this.props)
-  // }
+  componentDidMount () {
+    // this.makeZomeCall('fetchRevocationRules')
+    // this.makeZomeCall('fetchAuthorizer')
+    // this.makeZomeCall('fetchIsInitialized')
+    // this.makeZomeCall('fetchAllKeys')
+    // set_authorizor
+    this.props.fetchRevocationRules({})
+      .catch((reason: any) => {
+        console.log('fetchRevocationRules ERROR: ', JSON.stringify(reason))
+      })
+    this.props.fetchAuthorizer({})
+      .catch((reason: any) => {
+        console.log('fetchAuthorizer ERROR: ', JSON.stringify(reason))
+      })
+    this.props.fetchIsInitialized({})
+      .catch((reason: any) => {
+        console.log('fetchIsInitialized ERROR: ', JSON.stringify(reason))
+      })
+    this.props.fetchAllKeys({})
+      .catch((reason: any) => {
+        console.log('fetchAllKeys ERROR: ', JSON.stringify(reason))
+      })
+  }
 
   render () {
     const { classes, revocationRuleSet, isInitialized, allKeys } = this.props
@@ -74,42 +89,38 @@ class DeepKeyOverview extends React.Component<Props, {}> {
           </Typography>
 
           <hr/>
-          {isInitialized ?
-            <Typography variant='subtitle1' gutterBottom={true}>
-              DeepKey is Initialized
-            </Typography>
-
-          : isInitialized && revocationRuleSet ?
+          {isInitialized && revocationRuleSet && allKeys ?
             <div>
-              <Typography variant='subtitle1' gutterBottom={true}>
+              <Typography variant='h5' gutterBottom={true}>
                 Available Keys
               </Typography>
 
-              <DeepKeyDetail address={revocationRuleSet.revocationKey} keyType={'revocationKey'}/>
-            </div>
-
-            : isInitialized && revocationRuleSet && allKeys ?
-              <List>
+                  <DeepKeyDetail key={0} address={revocationRuleSet.revocationKey} keyType={'revocationKey'}/>
                 {
                   allKeys.map((key: Key, index: number) => (
                     // tslint:disable-next-line jsx-no-lambda
-                    <Route
-                      key={`${index}-deepkey`}
-                      render={({ history }) => (
-                        <ListItem key={index} button={true} onClick={() => { history.push(`/deepkey/${key.keyType}`) }}>
-                          <ListItemText primary={key.keyType} />
-                          <DeepKeyDetail address={key.address} keyType={key.keyType}/>
-                        </ListItem>
-                      )}
-                    />
+                        <DeepKeyDetail key={index + 1} address={key.address} keyType={key.keyType}/>
                   ))
                 }
-              </List>
-
+            </div>
             : isInitialized && revocationRuleSet && !allKeys ?
             <Typography variant='subtitle1' gutterBottom={true}>
               No Keys Currently Available
             </Typography>
+
+            : isInitialized ?
+              <Typography variant='subtitle1' gutterBottom={true}>
+                DeepKey is Initialized
+              </Typography>
+
+            : isInitialized && revocationRuleSet ?
+              <div>
+                <Typography variant='subtitle1' gutterBottom={true}>
+                  Revocation Key
+                </Typography>
+
+                <DeepKeyDetail address={revocationRuleSet.revocationKey} keyType={'revocationKey'}/>
+              </div>
 
             :
             <main>

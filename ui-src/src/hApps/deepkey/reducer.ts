@@ -1,15 +1,16 @@
 import { ActionType, getType } from 'typesafe-actions'
 import { combineReducers } from 'redux'
 import * as deepKeyAction from './actions'
+import { Key, Authorizer, Rule } from './types/deepKey'
 
 export type DeepKeyAction = ActionType<typeof deepKeyAction>
 
 // readonly keyword causes compiler to error if one attempts to mutate the state
 export type DeepKeyState = {
   readonly isInitialized: false,
-  readonly revocationRuleSet: undefined,
-  readonly authorizerKeySet: undefined,
-  readonly allKeys: []
+  readonly revocationRuleSet?: Rule,
+  readonly authorizerKeySet?: Authorizer,
+  readonly allKeys: Array<Key>
 }
 
 export type State = DeepKeyState

@@ -48,6 +48,11 @@ use crate::profile;
 =            Public zome functions            =
 =============================================*/
 
+#[derive(Debug, Serialize, Deserialize, DefaultJson)]
+#[serde(rename_all = "camelCase")]
+struct SignalPayload {
+	source_dna: String
+}
 
 pub fn handle_register_app(spec: ProfileSpec) -> ZomeApiResult<(Address)> {
     hdk::debug("bridge register profile spec")?;
@@ -59,6 +64,7 @@ pub fn handle_register_app(spec: ProfileSpec) -> ZomeApiResult<(Address)> {
 
 	hdk::link_entries(&anchor_address, &profile_address, PROFILES_LINK_TYPE, "")?;
     hdk::debug("finish bridge register profile spec")?;
+    let _ = hdk::emit_signal('show_ui', SignalPayload{source_dna});
 	Ok(profile_address)
 }
 

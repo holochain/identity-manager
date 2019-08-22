@@ -4,10 +4,10 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
 import { DeleteForever, Autorenew } from '@material-ui/icons'
-import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, withStyles } from '@material-ui/core/styles';
 import withRoot from '../../../withRoot'
 
-const styles = ({ palette }: Theme) => createStyles({
+const styles = () => createStyles({
   card: {
     minWidth: 300
   },
@@ -28,12 +28,12 @@ function DeepKeyDetail (props: any) {
   const { currentKey, classes, keyType, address, updateKey } = props
 
   // const currentKeyProps = revocationRuleSetProp || authorizerKeySetProp || agentKeyProps
-  const displayProp = (text: string) => {
-    const transformedText = text.replace(/([A-Z])/g, ' $1').trim()
-    const capFirstLetter = transformedText[0].toUpperCase()
-    const newString = capFirstLetter + transformedText.substr(1)
-    return newString
-  }
+  // const displayProp = (text: string) => {
+  //   const transformedText = text.replace(/([A-Z])/g, ' $1').trim()
+  //   const capFirstLetter = transformedText[0].toUpperCase()
+  //   const newString = capFirstLetter + transformedText.substr(1)
+  //   return newString
+  // }
 
   const makeZomeCall = (action: string, params?: any) => {
     const actionCall = props[action]
@@ -69,7 +69,7 @@ function DeepKeyDetail (props: any) {
   return (
 		<Card className={classes.card}>
 			<CardHeader
-        title={`${displayProp(keyType)}`}
+        title={`${keyType} - Enum`}
         titleTypographyProps={{ variant: 'h6' }}
         subheader={`${address}`}
         subheaderTypographyProps={{ variant: 'body2' }}
