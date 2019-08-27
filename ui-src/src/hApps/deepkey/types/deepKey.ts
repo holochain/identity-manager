@@ -8,14 +8,21 @@ export type KeyParams = {
   context?: String
 }
 
-export type RevParams = {
-  revocationKey: Hash,
-  signedOldRevocationKey: Signature
+export interface KeyMeta {
+  newKey: Hash,
+  derivationIndex: number,
+  keyType?: KeyType ,
+  context: String, // some_app_DNA_hash
 }
 
 export type AuthParams = {
   authorizationKeyPath: number,
   signedAuthKey: Signature
+}
+
+export type RevParams = {
+  revocationKey: Hash,
+  signedOldRevocationKey: Signature
 }
 
 // agent info to create new agent in conductor
@@ -35,12 +42,10 @@ export interface AgentList extends AgentSpec {
   fields: Array<AgentField>
 }
 
-
-// tslint:disable no-consecutive-blank-lines
-export interface Rule {
+export interface RevocationRuleSet {
   keysetRoot: Hash, // ?? Is this the Root Anchor to which all keys are linked.
   revocationKey: Hash, // NOTE: Created by agent in advance and supplied directly via the Conductor
-  priorRevocationSelfSig?: String | null // NOTE: Self-signed via the Signatory hApp, only done upon true Key Revocation
+  priorRevocationSelfSig?: Signature | null // NOTE: Self-signed via the Signatory hApp, only done upon true Key Revocation
 }
 
 export interface Authorizer {
@@ -50,22 +55,17 @@ export interface Authorizer {
 }
 
 export enum KeyType {
+  RevocationKey,
+  AuthorizerKey,
   AppUI,
   AppSig,
   AppEnc
 }
 
-export interface KeyMeta {
-  newKey: Hash,
-  derivationIndex: number,
-  keyType?: KeyType ,
-  context: String, // some_app_DNA_hash
-}
-
-export interface Key {
-  address: Hash | undefined,
-  keyType: KeyType
-}
+// export interface Key {
+//   address: Hash | undefined,
+//   keyType: KeyType
+// }
 
 export interface Agent {
   id: String,

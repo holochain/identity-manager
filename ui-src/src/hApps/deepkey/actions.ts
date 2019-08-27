@@ -1,13 +1,13 @@
 import { createHolochainZomeCallAsyncAction } from '@holochain/hc-redux-middleware'
 // import { connect } from '@holochain/hc-web-client'
 // import { get } from 'lodash/fp'
-import { Hash, Address, Signature, Rule, Authorizer, KeyMeta } from './types/deepKey'
+import { Hash, Address, Signature, RevocationRuleSet, Authorizer, KeyMeta } from './types/deepKey'
 
 /*----------  DeepKey Actions  ----------*/
 
 export const IsInitialized = createHolochainZomeCallAsyncAction<{}, boolean>('dpki_happ', 'dpki', 'is_initialized')
 
-export const GetRevocationRules = createHolochainZomeCallAsyncAction<{}, Array<{address: Address, entry: Rule}>>('dpki_happ', 'dpki', 'get_rules')
+export const GetRevocationRules = createHolochainZomeCallAsyncAction<{}, Array<{address: Address, entry: RevocationRuleSet}>>('dpki_happ', 'dpki', 'get_rules')
 
 export const UpdateRevocationRules = createHolochainZomeCallAsyncAction<{revocationKey: Hash, signedOldRevocationKey: Signature}, Address>('dpki_happ', 'dpki', 'update_rules')
 

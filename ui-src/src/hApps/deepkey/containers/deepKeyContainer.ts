@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { KeyParams } from '../types/deepKey' // Agent,
+import { KeyParams, RevParams, AuthParams } from '../types/deepKey' // Agent,
 import DeepKeyOverview, { StateProps, DispatchProps } from '../components/deepKeyOverview'
 import {
 	IsInitialized,
   GetRevocationRules,
-  // UpdateRevocationRules,
-  // SetAuthorizer,
+  UpdateRevocationRules,
+  SetAuthorizer,
 	GetAuthorizer,
 	GetAllKeys,
 	UpdateKey,
@@ -28,8 +28,8 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   // DeepKey DNA Calls:
   fetchIsInitialized: () => dispatch(IsInitialized.create({})),
   fetchRevocationRules: () => dispatch(GetRevocationRules.create({})),
-  // updateRevocationRules: (args: RevParams) => dispatch(UpdateRevocationRules.create(args)),
-  // setAuthorizer: (args: AuthParams) => dispatch(SetAuthorizer.create(args)),
+  updateRevocationRules: (args: RevParams) => dispatch(UpdateRevocationRules.create(args)),
+  setAuthorizer: (args: AuthParams) => dispatch(SetAuthorizer.create(args)),
   fetchAuthorizer: () => dispatch(GetAuthorizer.create({})),
   fetchAllKeys: () => dispatch(GetAllKeys.create({})),
   updateKey: (args: KeyParams) => dispatch(UpdateKey.create(args)),

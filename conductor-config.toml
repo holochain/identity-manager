@@ -9,21 +9,21 @@
   file = "dna/personas-profiles.dna.json"
   hash = "QmUbkSVA6ftcMmrVuEQguu9qE6ju4cU3SqThojBX9waBni"
 
-  [[dnas]]
-    id = "deep_key"
-    file = "../DeepKey/dna/deepkey.dna.json"
-    hash = "QmWTbutGJmJZqkc734fKgLu4rLiQg2Eek3ckUGHFHw5MZ5"
+[[dnas]]
+  id = "deep_key"
+  file = "../DeepKey/dna/deepkey.dna.json"
+  hash = "QmWTbutGJmJZqkc734fKgLu4rLiQg2Eek3ckUGHFHw5MZ5"
 
-  [[instances]]
-    id = "dpki_happ"
-    dna = "deep_key"
-    agent = "test_agent1"
-  [instances.logger]
-    type = "simple"
-    file = "app_spec.log"
-  [instances.storage]
-    type = "memory"
-    path = "tmp-storage"
+[[instances]]
+  id = "dpki_happ"
+  dna = "deep_key"
+  agent = "test_agent1"
+[instances.logger]
+  type = "simple"
+  file = "app_spec.log"
+[instances.storage]
+  type = "memory"
+  path = "tmp-storage"
 
 [[instances]]
   id = "personas-profiles"
