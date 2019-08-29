@@ -6,13 +6,13 @@ import personasProfiles from './hApps/personas-profiles/reducer'
 import deepkey from './hApps/deepkey/reducer'
 
 
-const REACT_APP_PERSONAS_WEBSOCKET_INTERFACE = process.env.REACT_APP_PERSONAS_WEBSOCKET_INTERFACE
+const REACT_APP_WEBSOCKET_INTERFACE = process.env.REACT_APP_WEBSOCKET_INTERFACE
 
 let rootReducer = combineReducers({ login: login, personasProfiles: personasProfiles, deepkey: deepkey })
 let middleware: Array<any>
-if (REACT_APP_PERSONAS_WEBSOCKET_INTERFACE) {
+if (REACT_APP_WEBSOCKET_INTERFACE) {
   middleware = [
-    holochainMiddleware(connect({ url: REACT_APP_PERSONAS_WEBSOCKET_INTERFACE }))  ]
+    holochainMiddleware(connect({ url: REACT_APP_WEBSOCKET_INTERFACE }))  ]
 } else {
   middleware = [holochainMiddleware(connect())]
   //   holochainMiddleware(connect().then((webclient) => {

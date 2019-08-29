@@ -12,7 +12,7 @@ export interface KeyMeta {
   newKey: Hash,
   derivationIndex: number,
   keyType?: KeyType ,
-  context: String, // some_app_DNA_hash
+  context: String, //
 }
 
 export type AuthParams = {
@@ -57,9 +57,8 @@ export interface Authorizer {
 export enum KeyType {
   RevocationKey,
   AuthorizerKey,
-  AppUI,
-  AppSig,
-  AppEnc
+  AppSig, //Signature Key
+  AppEnc //Encryption Key
 }
 
 // export interface Key {

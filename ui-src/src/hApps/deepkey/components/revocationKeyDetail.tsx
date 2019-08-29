@@ -67,7 +67,7 @@ class RevocationKeyDetail extends React.Component<Props, {}> {
             }
             title='Revocation Key'
             titleTypographyProps={{ variant: 'h6' }}
-            subheader={`${revocationRuleSet.revocationKey}`}
+            subheader={`${revocationRuleSet.revocationKey.substring(0, 15) + '...'}`}
             subheaderTypographyProps={{ variant: 'body2' }}
     			/>
     			<hr style={{ margin: '5px auto', width: '95%' }}/>

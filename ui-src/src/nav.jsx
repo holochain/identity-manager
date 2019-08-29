@@ -68,7 +68,7 @@ function Navigation(props) {
 
   function handleClickListItem(history, path) {
     history.push(path)
-    setMobileOpen(!mobileOpen)
+    setMobileOpen(false)
   }
 
   const drawer = (
@@ -121,9 +121,11 @@ function Navigation(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Holochain Identity Manager 
-          </Typography>
+          <Route render={({ history}) => (
+            <Typography variant="h6" onClick={() => { history.push('/') }}>
+              Holochain Identity Manager
+            </Typography>
+          )} />
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
