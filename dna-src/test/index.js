@@ -14,6 +14,7 @@ const dna = Diorama.dna(dnaPath, 'personas')
 const diorama = new Diorama({
   instances: {
     alice: dna,
+    alice_2: dna
   },
   bridges: [
   ],

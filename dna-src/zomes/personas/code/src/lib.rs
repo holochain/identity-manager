@@ -30,7 +30,6 @@ use hdk::{
 };
 
 pub mod persona;
-pub type Base = RawString;
 
 pub static PERSONA_ENTRY: &str = "persona";
 pub static PERSONA_FIELD_ENTRY: &str = "persona_field";
@@ -72,7 +71,7 @@ pub mod personas {
             validation_package: || {
                 hdk::ValidationPackageDefinition::Entry
             },
-            validation: | _validation_data: hdk::EntryValidationData<Base>| {
+            validation: | _validation_data: hdk::EntryValidationData<String>| {
                 Ok(())
             },
 

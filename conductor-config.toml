@@ -12,7 +12,7 @@
 [[dnas]]
   id = "deep_key"
   file = "../DeepKey/dna/deepkey.dna.json"
-  hash = "QmWTbutGJmJZqkc734fKgLu4rLiQg2Eek3ckUGHFHw5MZ5"
+  hash = "QmUdFuLroiHqyHm4pF2kjjJG3e4UAcyYfnkR4SvrepbNfZ"
 
 [[instances]]
   id = "dpki_happ"
@@ -40,7 +40,7 @@
   id = "personas_websocket_interface"
 [interfaces.driver]
   type = "websocket"
-  port = 5401
+  port = 3401
 [[interfaces.instances]]
   id = "personas-profiles"
 [[interfaces.instances]]

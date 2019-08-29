@@ -26,7 +26,6 @@ use hdk::{
 };
 
 pub mod profile;
-pub type Base = RawString;
 
 pub static PROFILE_ENTRY: &str = "profile";
 pub static FIELD_MAPPING_ENTRY: &str = "field_mapping";
@@ -38,7 +37,7 @@ pub static PROFILES_LINK_TYPE: &str = "profiles";
 
 #[zome]
 pub mod profiles {
-    
+
     #[init]
     fn init() {
         Ok(())
@@ -68,7 +67,7 @@ pub mod profiles {
             validation_package: || {
                 hdk::ValidationPackageDefinition::Entry
             },
-            validation: | _validation_data: hdk::EntryValidationData<Base>| {
+            validation: | _validation_data: hdk::EntryValidationData<String>| {
                 Ok(())
             },
             links: [

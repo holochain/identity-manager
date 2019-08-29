@@ -2,7 +2,6 @@ use std::convert::TryInto;
 extern crate serde_json;
 extern crate utils;
 use hdk::{
-    AGENT_ADDRESS,
     holochain_core_types::{
         entry::Entry,
         link::LinkMatch,
@@ -48,29 +47,29 @@ use crate::profile;
 =            Public zome functions            =
 =============================================*/
 
-#[derive(Debug, Serialize, Deserialize, DefaultJson)]
-#[serde(rename_all = "camelCase")]
-struct SignalPayload {
-	source_dna: String
-}
+// #[derive(Debug, Serialize, Deserialize, DefaultJson)]
+// #[serde(rename_all = "camelCase")]
+// struct SignalPayload {
+// 	source_dna: String
+// }
 
 pub fn handle_register_app(spec: ProfileSpec) -> ZomeApiResult<(Address)> {
     hdk::debug("bridge register profile spec")?;
     let persona_entry = Entry::App(PROFILE_ENTRY.into(), spec.into());
-    let anchor_entry = Entry::App(PROFILE_ANCHOR_ENTRY.into(), Address::from(AGENT_ADDRESS.to_string()).into());
+    let anchor_entry = Entry::App(PROFILE_ANCHOR_ENTRY.into(), PROFILE_ANCHOR_ENTRY.into());
 
 	let profile_address = hdk::commit_entry(&persona_entry)?;
 	let anchor_address = hdk::commit_entry(&anchor_entry)?;
 
 	hdk::link_entries(&anchor_address, &profile_address, PROFILES_LINK_TYPE, "")?;
     hdk::debug("finish bridge register profile spec")?;
-    let _ = hdk::emit_signal('show_ui', SignalPayload{source_dna});
+    // let _ = hdk::emit_signal('show_ui', SignalPayload{source_dna});
 	Ok(profile_address)
 }
 
 
 pub fn handle_get_profiles() -> ZomeApiResult<Vec<Profile>> {
-	let anchor_entry = Entry::App(PROFILE_ANCHOR_ENTRY.into(), Address::from(AGENT_ADDRESS.to_string()).into());
+	let anchor_entry = Entry::App(PROFILE_ANCHOR_ENTRY.into(), PROFILE_ANCHOR_ENTRY.into());
 	let anchor_address = hdk::commit_entry(&anchor_entry)?;
 
 	let result: Vec<GetLinksLoadResult<ProfileSpec>> = get_links_and_load_type(&anchor_address, LinkMatch::Exactly(PROFILES_LINK_TYPE.into()), LinkMatch::Any)?;

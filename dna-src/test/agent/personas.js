@@ -31,12 +31,14 @@ module.exports = scenario => {
     t.equal(listOfPersonas.Ok.filter(p => p.entry.name === "Default")[0].entry.fields.length, 0)
   })
 
-  scenario('Can retrieve a list of personas', async (s, t, {alice}) => {
+  scenario.only('Alice_2 can retrieve a list of personas by Alice', async (s, t, {alice, alice_2}) => {
     const result = await alice.callSync("personas", "create_persona", {spec: testPersonaSpec})
     console.log(result)
     t.equal(result.Ok.length, 46)
-    const listOfPersonas = await alice.callSync("personas", "get_personas", {})
+    const listOfPersonas = await alice_2.callSync("personas", "get_personas", {})
     console.log(listOfPersonas)
+
+    console.log(listOfPersonas.Ok[0])
     t.equal(listOfPersonas.Ok.length, 1)
   })
 

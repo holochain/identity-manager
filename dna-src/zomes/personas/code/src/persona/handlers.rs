@@ -1,6 +1,5 @@
 extern crate utils;
 use hdk::{
-    AGENT_ADDRESS,
     holochain_core_types::{
         entry::Entry,
         link::LinkMatch,
@@ -41,14 +40,15 @@ use crate::{
 =            public fn handlers            =
 ==========================================*/
 
+fn get_anchor_address() -> ZomeApiResult<Address> {
+    hdk::commit_entry(&Entry::App(PERSONA_ANCHOR_ENTRY.into(), PERSONA_ANCHOR_ENTRY.into()))
+}
+
 pub fn handle_create_persona(spec: PersonaSpec) -> ZomeApiResult<Address> {
-
     let persona_entry = Entry::App(PERSONA_ENTRY.into(), spec.into());
-    let anchor_entry = Entry::App(PERSONA_ANCHOR_ENTRY.into(), Address::from(AGENT_ADDRESS.to_string()).into());
     let persona_address = hdk::commit_entry(&persona_entry)?;
-    let anchor_address = hdk::commit_entry(&anchor_entry)?;
+    let anchor_address = get_anchor_address()?;
     hdk::link_entries(&anchor_address, &persona_address, PERSONA_ANCHOR_LINK_TYPE, "")?;
-
     Ok(persona_address.to_string().into())
 }
 
@@ -57,22 +57,14 @@ pub fn handle_update_persona(persona_address: Address, spec: PersonaSpec) -> Zom
 }
 
 pub fn handle_delete_persona(persona_address: Address) -> ZomeApiResult<Address> {
-    let anchor_entry = Entry::App(PERSONA_ANCHOR_ENTRY.into(), Address::from(AGENT_ADDRESS.to_string()).into());
-    let anchor_address = hdk::commit_entry(&anchor_entry)?;
-    hdk::remove_link(&anchor_address.clone(), &persona_address.clone(), PERSONA_ANCHOR_LINK_TYPE, "")?;
+    let anchor_address = get_anchor_address()?;
+    hdk::remove_link(&anchor_address, &persona_address.clone(), PERSONA_ANCHOR_LINK_TYPE, "")?;
     hdk::remove_entry(&persona_address)
 }
 
 pub fn handle_get_personas() -> ZomeApiResult<Vec<GetLinksLoadResult<Persona>>> {
-    let anchor_address = hdk::commit_entry(
-        &Entry::App(
-            PERSONA_ANCHOR_ENTRY.into(),
-            Address::from(AGENT_ADDRESS.to_string()).into(),
-        )
-    )?;
-
+    let anchor_address = get_anchor_address()?;
     let persona_specs: Vec<GetLinksLoadResult<PersonaSpec>> = get_links_and_load_type(&anchor_address, LinkMatch::Exactly(PERSONA_ANCHOR_LINK_TYPE.into()), LinkMatch::Any)?;
-
     match persona_specs.len() {
         0 => {
             hdk::debug("create Default persona")?;
@@ -100,12 +92,10 @@ pub fn handle_get_personas() -> ZomeApiResult<Vec<GetLinksLoadResult<Persona>>> 
 
 
 pub fn handle_add_field(persona_address: Address, field: PersonaField) -> ZomeApiResult<()> {
-
     let persona_field_entry = Entry::App(
         PERSONA_FIELD_ENTRY.into(),
         field.into(),
     );
-
     let field_address = hdk::commit_entry(&persona_field_entry)?;
     hdk::link_entries(&persona_address, &field_address, PERSONA_FIELDS_LINK_TYPE, "")?;
     Ok(())
@@ -132,5 +122,7 @@ fn get_fields(persona_address: &Address) -> ZomeApiResult<Vec<PersonaField>> {
 }
 
 fn create_default_persona() -> ZomeApiResult<Address> {
+    hdk::debug("Create Default persona")?;
+
     handle_create_persona(PersonaSpec::default())
 }
