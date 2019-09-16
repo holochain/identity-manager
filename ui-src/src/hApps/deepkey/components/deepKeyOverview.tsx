@@ -24,6 +24,9 @@ const styles = ({ spacing }: Theme) => createStyles({
   },
   paper: {
     padding: spacing(1)
+  },
+  card: {
+    margn: spacing(1)
   }
 })
 
@@ -90,12 +93,13 @@ class DeepKeyOverview extends React.Component<Props, {}> {
               <Typography variant='h5' gutterBottom={true}>
                 Available Keys
               </Typography>
-              <RevocationKeyDetail key={0} revocationRuleSet={revocationRuleSet} updateRevocationRules={updateRevocationRules} />
-              <AuthorizationKeyDetail key={1} authorizerKeySet={authorizerKeySet} setAuthorizer={setAuthorizer} />
+              <RevocationKeyDetail className={classes.paper} key={0} revocationRuleSet={revocationRuleSet} updateRevocationRules={updateRevocationRules} />
+              <AuthorizationKeyDetail className={classes.paper} key={1} authorizerKeySet={authorizerKeySet} setAuthorizer={setAuthorizer} />
               {
                 allKeys.map((key: KeyMeta, index: number) => (
                   <KeyDetail
-                  key={index+2}
+                    className={classes.paper}
+                    key={index+2}
                     deepKey={key}
                     keyType={key.keyType}
                     index={index}

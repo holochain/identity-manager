@@ -73,9 +73,9 @@ class KeyDetail extends React.Component<Props, {}> {
                 <VpnKey color='action'/>
               </Avatar>
             }
-            title='Key'
+            title={`${deepKey.context}`}
             titleTypographyProps={{ variant: 'h6' }}
-            subheader={`${deepKey.newKey}`}
+            subheader={`${deepKey.newKey.substring(0, 15) + '...'}`}
             subheaderTypographyProps={{ variant: 'body2' }}
     			/>
     			<hr style={{ margin: '5px auto', width: '95%' }}/>

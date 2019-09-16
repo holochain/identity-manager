@@ -67,7 +67,7 @@ class AuthorizationKeyDetail extends React.Component<Props, {}> {
             }
             title='Authorization Key'
             titleTypographyProps={{ variant: 'h6' }}
-            subheader={`${authorizerKeySet.authorizationKey}`}
+            subheader={`${authorizerKeySet.authorizationKey.substring(0, 15) + '...'}`}
             subheaderTypographyProps={{ variant: 'body2' }}
     			/>
     			<hr style={{ margin: '5px auto', width: '95%' }}/>
