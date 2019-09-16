@@ -41,13 +41,13 @@ pub static PERSONA_ANCHOR_LINK_TYPE: &str = "personas";
 #[zome]
 pub mod personas {
 
-    #[init]
-    fn init() {
-        Ok(())
-    }
-
     #[validate_agent]
     pub fn validate_agent(validation_data: EntryValidationData<AgentId>) {
+        Ok(())
+    }
+    
+    #[init]
+    fn init() {
         Ok(())
     }
 

@@ -95,12 +95,6 @@ function Navigation(props) {
                 </ListItemIcon>
                 <ListItemText primary='Profiles' />
               </ListItem>
-              <ListItem button onClick={() => { handleClickListItem(history,'/login') }}>
-                <ListItemIcon>
-                  <PersonIcon />
-                </ListItemIcon>
-                <ListItemText primary='Login' />
-              </ListItem>
             </div>
           )} />
       </List>
