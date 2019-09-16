@@ -30,7 +30,7 @@
     "ui:start:agent2": "REACT_APP_WEBSOCKET_INTERFACE='ws://localhost:3402' PORT=4002 react-scripts start",
     "ui:start:agent3": "REACT_APP_WEBSOCKET_INTERFACE='ws://localhost:3403' PORT=4003 react-scripts start",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -rf ../ui && react-scripts build && mv ./build ../ui",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
