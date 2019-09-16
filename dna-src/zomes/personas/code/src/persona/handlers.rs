@@ -53,7 +53,13 @@ pub fn handle_create_persona(spec: PersonaSpec) -> ZomeApiResult<Address> {
 }
 
 pub fn handle_update_persona(persona_address: Address, spec: PersonaSpec) -> ZomeApiResult<Address> {
-    hdk::update_entry(Entry::App(PERSONA_ENTRY.into(), spec.into()), &persona_address)
+    // First check if the spec has changed. If it has then do Update otherwise just return the Address
+    let existing_spec = hdk::utils::get_as_type::<PersonaSpec>(persona_address.clone())?;
+    if existing_spec == spec {
+        Ok(persona_address.clone())
+    } else {
+        hdk::update_entry(Entry::App(PERSONA_ENTRY.into(), spec.into()), &persona_address)
+    }
 }
 
 pub fn handle_delete_persona(persona_address: Address) -> ZomeApiResult<Address> {

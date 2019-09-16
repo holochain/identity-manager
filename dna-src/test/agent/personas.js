@@ -31,7 +31,7 @@ module.exports = scenario => {
     t.equal(listOfPersonas.Ok.filter(p => p.entry.name === "Default")[0].entry.fields.length, 0)
   })
 
-  scenario.only('Alice_2 can retrieve a list of personas by Alice', async (s, t, {alice, alice_2}) => {
+  scenario('Alice_2 can retrieve a list of personas by Alice', async (s, t, {alice, alice_2}) => {
     const result = await alice.callSync("personas", "create_persona", {spec: testPersonaSpec})
     console.log(result)
     t.equal(result.Ok.length, 46)
@@ -67,6 +67,18 @@ module.exports = scenario => {
     console.log(listOfPersonas)
     t.equal(listOfPersonas.Ok.length, 1)
     t.equal(listOfPersonas.Ok[0].entry.name, testUpdatePersonaSpec.name)
+  })
+
+  scenario('Does not attempt to update a persona spec that has not changed', async (s, t, {alice}) => {
+    const result = await alice.callSync("personas", "create_persona", {spec: testPersonaSpec})
+    console.log(result)
+    const resultUpdate = await alice.callSync("personas", "update_persona", {persona_address: result.Ok, spec: testPersonaSpec})
+    console.log(resultUpdate)
+    t.equal(resultUpdate.Ok.length, 46)
+    const listOfPersonas = await alice.callSync("personas", "get_personas", {})
+    console.log(listOfPersonas)
+    t.equal(listOfPersonas.Ok.length, 1)
+    t.equal(listOfPersonas.Ok[0].entry.name, testPersonaSpec.name)
   })
 
   scenario('Can delete a persona', async (s, t, {alice}) => {
