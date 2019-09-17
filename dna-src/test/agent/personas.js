@@ -1,7 +1,7 @@
 module.exports = scenario => {
 
   const testPersonaSpec = {
-      name: "something"
+      name: "PersonaName"
   }
 
   const testUpdatePersonaSpec = {
@@ -14,6 +14,16 @@ module.exports = scenario => {
       field: {
         name: "test_field",
         data: "string data"
+      }
+    }
+  }
+
+  const testFieldUpdate = (persona_address) => {
+    return {
+      persona_address,
+      field: {
+        name: "test_field",
+        data: "updated data"
       }
     }
   }
@@ -54,10 +64,21 @@ module.exports = scenario => {
     // can get the field
     const get_result = await alice.callSync("personas", "get_personas", {})
     console.log(get_result)
-    t.equal(get_result.Ok.filter(p => p.entry.name === "something")[0].entry.fields.length, 1)
+    t.equal(get_result.Ok.filter(p => p.entry.name === "PersonaName")[0].entry.fields.length, 1)
   })
 
-  scenario('Can update a persona', async (s, t, {alice}) => {
+  scenario('Does not re-add an existing field to a persona', async (s, t, {alice}) => {
+    const persona_address = await alice.callSync("personas", "create_persona", {spec: testPersonaSpec})
+    t.equal(persona_address.Ok.length, 46)
+    const add_result = await alice.callSync("personas", "add_field", testField(persona_address.Ok))
+    t.notEqual(add_result.Ok, undefined)
+    const add_result_2 = await alice.callSync("personas", "add_field", testField(persona_address.Ok))
+    t.notEqual(add_result_2.Ok, undefined)
+    const get_result = await alice.callSync("personas", "get_personas", {})
+    t.equal(get_result.Ok.filter(p => p.entry.name === "PersonaName")[0].entry.fields.length, 1)
+  })
+
+  scenario('Can update a persona name', async (s, t, {alice}) => {
     const result = await alice.callSync("personas", "create_persona", {spec: testPersonaSpec})
     console.log(result)
     const resultUpdate = await alice.callSync("personas", "update_persona", {persona_address: result.Ok, spec: testUpdatePersonaSpec})
@@ -79,6 +100,19 @@ module.exports = scenario => {
     console.log(listOfPersonas)
     t.equal(listOfPersonas.Ok.length, 1)
     t.equal(listOfPersonas.Ok[0].entry.name, testPersonaSpec.name)
+  })
+
+  scenario.only('Updates the data in an existing field of a persona', async (s, t, {alice}) => {
+    const persona_address = await alice.callSync("personas", "create_persona", {spec: testPersonaSpec})
+    t.equal(persona_address.Ok.length, 46)
+    const add_result = await alice.callSync("personas", "add_field", testField(persona_address.Ok))
+    t.notEqual(add_result.Ok, undefined)
+    const add_result_2 = await alice.callSync("personas", "add_field", testFieldUpdate(persona_address.Ok))
+    t.notEqual(add_result_2.Ok, undefined)
+    const get_result = await alice.callSync("personas", "get_personas", {})
+    t.equal(get_result.Ok.filter(p => p.entry.name === "PersonaName")[0].entry.fields.length, 1)
+    t.equal(get_result.Ok.filter(p => p.entry.name === "PersonaName")[0].entry.fields[0].data, "updated data")
+
   })
 
   scenario('Can delete a persona', async (s, t, {alice}) => {

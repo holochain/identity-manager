@@ -98,14 +98,33 @@ pub fn handle_get_personas() -> ZomeApiResult<Vec<GetLinksLoadResult<Persona>>> 
 
 
 pub fn handle_add_field(persona_address: Address, field: PersonaField) -> ZomeApiResult<()> {
-    let persona_field_entry = Entry::App(
-        PERSONA_FIELD_ENTRY.into(),
-        field.into(),
-    );
-    let field_address = hdk::commit_entry(&persona_field_entry)?;
-    hdk::link_entries(&persona_address, &field_address, PERSONA_FIELDS_LINK_TYPE, "")?;
+    let mut all_field_addresses = hdk::get_links(&persona_address, LinkMatch::Exactly(PERSONA_FIELDS_LINK_TYPE), LinkMatch::Any)?.addresses().to_owned();
+    let mut new_field = true;
+    while let Some(existing_field_address) = all_field_addresses.pop() {
+        let existing_field = hdk::utils::get_as_type::<PersonaField>(existing_field_address.clone())?;
+        hdk::debug(format!("existing_field {:?} field {:?} equals {:?}", &existing_field.name, &field.name, &existing_field.name == &field.name))?;
+        if &existing_field.name == &field.name {
+            if existing_field != field {
+                hdk::update_entry(Entry::App(PERSONA_FIELD_ENTRY.into(), field.clone().into()), &existing_field_address)?;
+            }
+            new_field = false;
+        }
+    }
+    if new_field {
+        let persona_field_entry = Entry::App(
+            PERSONA_FIELD_ENTRY.into(),
+            field.into(),
+        );
+        let field_address = hdk::commit_entry(&persona_field_entry)?;
+        hdk::link_entries(&persona_address, &field_address, PERSONA_FIELDS_LINK_TYPE, "")?;
+    }
     Ok(())
 }
+
+// if &field_address.to_string() == &existing_field_address.to_string() {
+//     hdk::debug(format!("No need to link field: {:?}", &existing_field_address.to_string())).ok();
+//     new_field = false;
+// } else
 
 pub fn handle_get_field(persona_address: Address, field_name: String) -> ZomeApiResult<RawString> {
     let fields = get_fields(&persona_address)?;

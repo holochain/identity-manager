@@ -47,7 +47,7 @@ impl Default for Persona {
 }
 
 
-#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
+#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson, PartialEq)]
 pub struct PersonaField {
 	name: String,
 	data: String
