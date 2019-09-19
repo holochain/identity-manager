@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
     save: (profile: ProfileType, newPersonaFields: Array<PersonaField>) => {
       // call createMapping on all of the fields with a mapping
       console.log('About to map ', profile)
-
+      console.log(newPersonaFields)
       return Promise.all(
         profile.fields.filter(field => field.mapping).map((field: ProfileField) => {
 
@@ -68,7 +68,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
             console.log(personaFields)
             if (personaFields.length === 1) {
               console.log('add field to persona ', field)
-
               let personaField: PersonaField = personaFields[0]
               actions.push(dispatch(AddField.create({ persona_address: personaAddress, field: personaField })))
             }

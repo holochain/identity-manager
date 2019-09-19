@@ -83,6 +83,7 @@ class Profile extends React.Component<Props & RouterProps, State> {
   }
 
   componentDidMount () {
+    newPersonaFields = []
     this.props.getPersonas({})
       .then(() => this.props.getProfiles({}))
       .then()
@@ -114,6 +115,7 @@ class Profile extends React.Component<Props & RouterProps, State> {
           return field.name === personaFieldName
         })
         if (selectedPersonaFields.length === 0) {
+          console.log('newPersonaFields.push')
           newPersonaFields.push({ name: personaFieldName, data: value })
         }
       }
@@ -130,7 +132,6 @@ class Profile extends React.Component<Props & RouterProps, State> {
 
   handleSaveProfile = () => {
     this.props.save(this.state.profile, newPersonaFields)
-      .then(this.props.getPersonas)
       .then(this.props.getProfiles)
       .then(() => {
         if (this.props.returnUrl === '/profiles') {

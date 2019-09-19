@@ -102,7 +102,7 @@ module.exports = scenario => {
     t.equal(listOfPersonas.Ok[0].entry.name, testPersonaSpec.name)
   })
 
-  scenario.only('Updates the data in an existing field of a persona', async (s, t, {alice}) => {
+  scenario('Updates the data in an existing field of a persona', async (s, t, {alice}) => {
     const persona_address = await alice.callSync("personas", "create_persona", {spec: testPersonaSpec})
     t.equal(persona_address.Ok.length, 46)
     const add_result = await alice.callSync("personas", "add_field", testField(persona_address.Ok))

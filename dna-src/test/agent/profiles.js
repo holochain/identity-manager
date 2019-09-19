@@ -76,4 +76,49 @@ module.exports = scenario => {
     console.log(get_result.Ok[0])
     t.deepEqual(get_result.Ok.filter(p => p.name === "something")[0].fields[0].mapping, {personaAddress: persona_address, personaFieldName: 'test_field'})
   })
+
+  scenario('Update a profile field mapping', async (s, t,  {alice}) => {
+    const register_result = await alice.callSync("profiles", "register_app", {spec: testProfileSpec})
+    // create a persona to map to and add a field
+    const result = await alice.callSync("personas", "create_persona", {spec: {name: "mapToPersona"}})
+    console.log(result)
+    const persona_address = result.Ok
+    const add_result = await alice.callSync("personas", "add_field", {persona_address: persona_address, field: {name: "test_field", data: "string data"}})
+    const add_result_2 = await alice.callSync("personas", "add_field", {persona_address: persona_address, field: {name: "test_field_2", data: "field 2 data"}})
+    const map_result = await alice.callSync("profiles", "create_mapping",
+      {
+        mapping: {
+          retrieverDna: "xxx",
+          profileFieldName: "test_field",
+          personaAddress: persona_address,
+          personaFieldName: "test_field"
+        }
+      })
+    t.deepEqual(map_result.Ok, { mappingsCreated: 1 }, "a single mapping should be created");
+    const get_result = await alice.callSync("profiles", "get_profiles", {})
+    t.deepEqual(get_result.Ok.filter(p => p.name === "something")[0].fields[0].mapping, {personaAddress: persona_address, personaFieldName: 'test_field'})
+    //Now update the mapping
+    const map_result_2 = await alice.callSync("profiles", "create_mapping",
+      {
+        mapping: {
+          retrieverDna: "xxx",
+          profileFieldName: "test_field",
+          personaAddress: persona_address,
+          personaFieldName: "test_field_2"
+        }
+      })
+    t.deepEqual(map_result_2.Ok, { mappingsCreated: 1 }, "a single mapping should be created");
+    const get_result_2 = await alice.callSync("profiles", "get_profiles", {})
+    t.deepEqual(get_result_2.Ok.filter(p => p.name === "something")[0].fields[0].mapping, {personaAddress: persona_address, personaFieldName: 'test_field_2'})
+    //Check it only updates a mapping if iut has changed
+    const map_result_3 = await alice.callSync("profiles", "create_mapping",
+      {
+        mapping: {
+          retrieverDna: "xxx",
+          profileFieldName: "test_field",
+          personaAddress: persona_address,
+          personaFieldName: "test_field_2"
+        }
+      })
+  })
 }

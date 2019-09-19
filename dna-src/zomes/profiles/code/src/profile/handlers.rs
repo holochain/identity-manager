@@ -127,14 +127,26 @@ pub fn handle_create_mapping(mapping: profile::ProfileMapping) -> ZomeApiResult<
 	// iterate over the pairs to create the mappings and collect the errors/successes
 	let (success, errors): (Vec<ZomeApiResult<()>>, Vec<ZomeApiResult<()>>) =
 	mappings_to_create.iter().map(|(profile, field)| {
+        let mut update_mapping = false;
+        let existing_field_entry = Entry::App(FIELD_MAPPING_ENTRY.into(), field.clone().into());
+        let existing_field_address = hdk::entry_address(&existing_field_entry)?;
+        if field.mapping.is_some() {
+            update_mapping = true;
+        }
 		let new_field = field.new_with_mapping(Some(profile::FieldMapping {
 			persona_address: mapping.persona_address.to_owned(),
 			persona_field_name: mapping.persona_field_name.to_owned()
 		}));
-
-		let field_entry = Entry::App(FIELD_MAPPING_ENTRY.into(), new_field.into());
-		let field_hash = hdk::commit_entry(&field_entry)?;
-		hdk::link_entries(&profile.hash, &field_hash, FIELD_MAPPINGS_LINK_TYPE, "")?;
+        hdk::debug(format!("new_field {:?}", &new_field))?;
+        let field_entry = Entry::App(FIELD_MAPPING_ENTRY.into(), new_field.clone().into());
+        if update_mapping {
+            if field.mapping != new_field.mapping {
+                hdk::update_entry(field_entry, &existing_field_address)?;
+            }
+        } else {
+            let field_hash = hdk::commit_entry(&field_entry)?;
+            hdk::link_entries(&profile.hash, &field_hash, FIELD_MAPPINGS_LINK_TYPE, "")?;
+        }
 		Ok(())
 	}).partition(|result| result.is_ok());
 
