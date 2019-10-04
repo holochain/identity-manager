@@ -77,7 +77,7 @@ module.exports = scenario => {
     t.deepEqual(get_result.Ok.filter(p => p.name === "something")[0].fields[0].mapping, {personaAddress: persona_address, personaFieldName: 'test_field'})
   })
 
-  scenario('Update a profile field mapping', async (s, t,  {alice}) => {
+  scenario.only('Update a profile field mapping', async (s, t,  {alice}) => {
     const register_result = await alice.callSync("profiles", "register_app", {spec: testProfileSpec})
     // create a persona to map to and add a field
     const result = await alice.callSync("personas", "create_persona", {spec: {name: "mapToPersona"}})

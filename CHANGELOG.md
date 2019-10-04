@@ -23,7 +23,7 @@ Can now delete a Persona [#36](!https://github.com/holochain/personas-profiles/p
 
 ### Changed
 Updated README to use HackMD write up.
-Updated to 0.0.30-alpha2 PR [#32](!https://github.com/holochain/personas-profiles/pull/32)
+Updated to v0.0.31-alpha1 PR [#32](!https://github.com/holochain/personas-profiles/pull/32)
 ### Deprecated
 
 ### Removed
