@@ -49,30 +49,27 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
     getProfiles: () => dispatch(GetProfiles.create({})),
     getPersonas: () => dispatch(GetPersonas.create({})),
     setCurrentPersona: (newCurrentPersona: PersonaType) => { dispatch(SetCurrentPersona(newCurrentPersona)) },
-    save: (profile: ProfileType, personas: Array<PersonaType>) => {
+    save: (profile: ProfileType, newPersonaFields: Array<PersonaField>) => {
       // call createMapping on all of the fields with a mapping
       console.log('About to map ', profile)
-
+      console.log(newPersonaFields)
       return Promise.all(
         profile.fields.filter(field => field.mapping).map((field: ProfileField) => {
 
           let actions = []
 
-          console.log('add the persona field for ', field.displayName)
+          console.log('check if the profile field {0} exists on the persona ', field.displayName)
           if (field.mapping !== undefined) {
             let personaAddress = field.mapping.personaAddress
             let personaFieldName = field.mapping.personaFieldName
-            let selectedPersonas = personas.filter(function (persona: PersonaType) {
-              return persona.hash === personaAddress
+            let personaFields = newPersonaFields.filter(function (field) {
+              return field.name === personaFieldName
             })
-            if (selectedPersonas.length === 1) {
-              let selectedPersonaFields = selectedPersonas[0].fields.filter(function (field) {
-                return field.name === personaFieldName
-              })
-              if (selectedPersonaFields.length === 1) {
-                let personaField: PersonaField = selectedPersonaFields[0]
-                actions.push(dispatch(AddField.create({ persona_address: personaAddress, field: personaField })))
-              }
+            console.log(personaFields)
+            if (personaFields.length === 1) {
+              console.log('add field to persona ', field)
+              let personaField: PersonaField = personaFields[0]
+              actions.push(dispatch(AddField.create({ persona_address: personaAddress, field: personaField })))
             }
           }
           console.log('creating map for ', field)

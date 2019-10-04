@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import withRoot from '../../../../withRoot'
 import { Profile as ProfileType, ProfileField } from '../../types/profile'
-import { Persona as PersonaType } from '../../types/persona'
+import { Persona as PersonaType, PersonaField } from '../../types/persona'
 import Button from '@material-ui/core/Button'
 import { GetProfiles, GetPersonas } from '../../actions'
 import FieldMapper from './fieldMapper'
@@ -43,6 +43,8 @@ const styles = ({ spacing }: Theme) => createStyles({
   }
 })
 
+let newPersonaFields: Array<PersonaField> = []
+
 export interface RouterProps extends RouteComponentProps<{hash: string, returnUrl: string}> {}
 
 export interface OwnProps {
@@ -51,7 +53,7 @@ export interface OwnProps {
 }
 
 export interface DispatchProps {
-  save: (profile: ProfileType, personas: Array<PersonaType>) => Promise<any>
+  save: (profile: ProfileType, newPersonaFields: Array<PersonaField>) => Promise<any>
   getProfiles: typeof GetProfiles.sig
   getPersonas: typeof GetPersonas.sig
   setCurrentPersona: (newCurrentPersona: PersonaType) => void
@@ -81,8 +83,10 @@ class Profile extends React.Component<Props & RouterProps, State> {
   }
 
   componentDidMount () {
+    newPersonaFields = []
     this.props.getPersonas({})
       .then(() => this.props.getProfiles({}))
+      .then()
       .catch((err) => console.log(JSON.stringify(err)))
   }
 
@@ -111,10 +115,8 @@ class Profile extends React.Component<Props & RouterProps, State> {
           return field.name === personaFieldName
         })
         if (selectedPersonaFields.length === 0) {
-          selectedPersonas[0].fields.push({ name: personaFieldName, data: value })
-          this.setState({
-            personas: personas
-          })
+          console.log('newPersonaFields.push')
+          newPersonaFields.push({ name: personaFieldName, data: value })
         }
       }
     }
@@ -129,7 +131,7 @@ class Profile extends React.Component<Props & RouterProps, State> {
   }
 
   handleSaveProfile = () => {
-    this.props.save(this.state.profile, this.props.personas)
+    this.props.save(this.state.profile, newPersonaFields)
       .then(this.props.getProfiles)
       .then(() => {
         if (this.props.returnUrl === '/profiles') {

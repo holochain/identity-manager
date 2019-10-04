@@ -18,7 +18,7 @@ use crate::{
 
 pub mod handlers;
 
-#[derive(Serialize, Deserialize, Clone, Debug, DefaultJson)]
+#[derive(Serialize, Deserialize, Clone, Debug, DefaultJson, PartialEq)]
 pub struct PersonaSpec {
 	pub name: String
 }
@@ -47,7 +47,7 @@ impl Default for Persona {
 }
 
 
-#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
+#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson, PartialEq)]
 pub struct PersonaField {
 	name: String,
 	data: String

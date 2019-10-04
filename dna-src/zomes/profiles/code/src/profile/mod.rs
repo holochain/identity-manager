@@ -54,7 +54,7 @@ pub struct ProfileFieldSpec {
     pub schema: String
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
+#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson, PartialEq)]
 pub enum UsageType {
     STORE,
     DISPLAY
@@ -79,14 +79,14 @@ pub struct Profile {
     pub expiry: u32
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
+#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FieldMapping {
     pub persona_address: Address,
     pub persona_field_name: String
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
+#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ProfileField {
     pub name: String,
