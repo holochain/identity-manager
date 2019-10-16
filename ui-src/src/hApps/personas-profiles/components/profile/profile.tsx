@@ -137,7 +137,8 @@ class Profile extends React.Component<Props & RouterProps, State> {
         if (this.props.returnUrl === '/profiles') {
           this.props.history.push(this.props.returnUrl)
         } else {
-          window.location.replace(decodeURIComponent(this.props.returnUrl))
+          (window as any).activateHappWindow(this.props.returnUrl, ``)
+          // window.location.replace(decodeURIComponent(this.props.returnUrl))
         }
       })
       .catch(err => console.log(err))
