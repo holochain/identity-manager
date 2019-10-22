@@ -6,7 +6,7 @@ import personasProfiles from './hApps/personas-profiles/reducer'
 import deepkey from './hApps/deepkey/reducer'
 
 
-const REACT_APP_WEBSOCKET_INTERFACE = process.env.REACT_APP_WEBSOCKET_INTERFACE
+const REACT_APP_WEBSOCKET_INTERFACE = 'ws://localhost:10000' //process.env.REACT_APP_WEBSOCKET_INTERFACE
 
 let rootReducer = combineReducers({ login: login, personasProfiles: personasProfiles, deepkey: deepkey })
 let middleware: Array<any>

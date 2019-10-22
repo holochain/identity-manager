@@ -8,9 +8,11 @@
     "hc:dna:agent3": "cd dna && echo $(cat ./personas-profiles.dna.json | jq '.name = \"Agent3\"') > personas-profiles-agent3.dna.json",
     "hc:dna:agent4": "cd dna && echo $(cat ./personas-profiles.dna.json | jq '.name = \"Agent4\"') > personas-profiles-agent4.dna.json",
     "hc:build": "echo `pwd` && rm -rf tmp-storage && mkdir -p dna && cd dna-src && hc package --strip-meta -o ../dna/personas-profiles.dna.json",
+    "hc:build:holoscape": "echo `pwd` && rm -rf tmp-storage && mkdir -p dna && cd dna-src && hc package --strip-meta -o ../../holoscape/example-bundles/identity-manager-peer-chat/personas-profiles.dna.json",
     "hc:start": "mkdir -p tmp-storage && holochain -c ./conductor-config.toml",
     "hc:test": "cd dna-src && hc test",
-    "prerelease": "rm -rf ./release && cd ui-src && npm run build && cd .. && npm run hc:test && npm run hc:build && mkdir -p ./release && mv ./ui ./release/ui && mv ./dna ./release/dna && cp ./my-conductor-config.toml ./release/my-conductor-config.toml"
+    "prerelease": "rm -rf ./release && cd ui-src && npm run build && cd .. && npm run hc:test && npm run hc:build && mkdir -p ./release && mv ./ui ./release/ui && mv ./dna ./release/dna && cp ./my-conductor-config.toml ./release/my-conductor-config.toml",
+    "holoscape:build": "npm run hc:build:holoscape && cd ui-src && npm run build:holoscape"
   },
   "repository": {
     "type": "git",
