@@ -57,14 +57,21 @@ pub fn handle_register_app(spec: ProfileSpec) -> ZomeApiResult<(Address)> {
     hdk::debug("bridge register profile spec")?;
     let persona_entry = Entry::App(PROFILE_ENTRY.into(), spec.into());
     let anchor_entry = Entry::App(PROFILE_ANCHOR_ENTRY.into(), PROFILE_ANCHOR_ENTRY.into());
-
 	let profile_address = hdk::commit_entry(&persona_entry)?;
 	let anchor_address = hdk::commit_entry(&anchor_entry)?;
-
-	hdk::link_entries(&anchor_address, &profile_address, PROFILES_LINK_TYPE, "")?;
-    hdk::debug("finish bridge register profile spec")?;
-    // let _ = hdk::emit_signal('show_ui', SignalPayload{source_dna});
-	Ok(profile_address)
+    let mut profile_spec_ids = hdk::get_links(&anchor_address, LinkMatch::Exactly(PROFILES_LINK_TYPE.into()), LinkMatch::Any)?.addresses().to_owned();
+    let mut link_profile_spec = true;
+    while let Some(profile_spec_id) = profile_spec_ids.pop() {
+        if &profile_address.to_string() == &profile_spec_id.to_string() {
+            hdk::debug(format!("Profile Spec {:?} already linked", profile_spec_id.to_string())).ok();
+            link_profile_spec = false;
+        }
+    }
+    if link_profile_spec {
+        hdk::debug("Linking Profile Spec").ok();
+        hdk::link_entries(&anchor_address, &profile_address, PROFILES_LINK_TYPE, "")?;
+    }
+    Ok(profile_address)
 }
 
 
@@ -159,6 +166,17 @@ pub fn handle_create_mapping(mapping: profile::ProfileMapping) -> ZomeApiResult<
 	}
 }
 
+#[derive(Debug, Serialize, Deserialize, DefaultJson)]
+#[serde(rename_all = "camelCase")]
+struct SignalPayload {
+    view: String,
+	location: String
+}
+
+pub fn handle_saved(ui: String, location: String) -> ZomeApiResult<()> {
+    let _ = hdk::emit_signal("switch_view", SignalPayload{view: ui, location: location});
+    Ok(())
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
 struct GetFieldCallStruct {

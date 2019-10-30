@@ -1,29 +1,19 @@
 const path = require('path')
 const tape = require('tape')
-
-const { Diorama, tapeExecutor, backwardCompatibilityMiddleware } = require('@holochain/diorama')
-
+const { Orchestrator, combine, callSync, singleConductor, tapeExecutor } = require('@holochain/try-o-rama')
+const orchestrator = new Orchestrator({
+  globalConfig: {logger: false, network: {
+      type: 'sim2h',
+      sim2h_url: 'wss://0.0.0.0:9001'
+    }
+  },
+  middleware: combine(callSync, singleConductor, tapeExecutor(tape))
+})
 process.on('unhandledRejection', error => {
-  // Will print "unhandledRejection err is not defined"
   console.error('got unhandledRejection:', error);
 });
 
-const dnaPath = path.join(__dirname, "../dist/dna-src.dna.json")
-const dna = Diorama.dna(dnaPath, 'personas')
+require('./agent/personas')(orchestrator.registerScenario)
+// require('./agent/profiles')(orchestrator.registerScenario)
 
-const diorama = new Diorama({
-  instances: {
-    alice: dna,
-    alice_2: dna
-  },
-  bridges: [
-  ],
-  debugLog: false,
-  executor: tapeExecutor(require('tape')),
-  middleware: backwardCompatibilityMiddleware,
-})
-
-require('./agent/personas')(diorama.registerScenario)
-require('./agent/profiles')(diorama.registerScenario)
-
-diorama.run()
+orchestrator.run()

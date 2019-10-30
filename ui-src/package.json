@@ -31,6 +31,8 @@
     "ui:start:agent3": "REACT_APP_WEBSOCKET_INTERFACE='ws://localhost:3403' PORT=4003 react-scripts start",
     "start": "react-scripts start",
     "build": "rm -rf ../ui && react-scripts build && mv ./build ../ui",
+    "build:holoscape": "rm -rf '/Users/philipbeadle/Library/Application Support/Holoscape-default/UIs/identity-manager' && react-scripts build && mv ./build '/Users/philipbeadle/Library/Application Support/Holoscape-default/UIs/identity-manager'",
+    "build:holoscape-bundle": "rm -rf ../ui && react-scripts build && cd build && zip -r identity-manager-ui.zip * && mv identity-manager-ui.zip ../../../holoscape/example-bundles/identity-manager-peer-chat",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",

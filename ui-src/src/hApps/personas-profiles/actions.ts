@@ -22,6 +22,8 @@ export const GetProfiles = createHolochainZomeCallAsyncAction<{}, Array<Profile>
 
 export const CreateMapping = createHolochainZomeCallAsyncAction<{mapping: ProfileMapping}, {mappings_created: number}>('personas-profiles', 'profiles', 'create_mapping')
 
+export const Saved = createHolochainZomeCallAsyncAction<{ui: String, location: String}, null>('personas-profiles', 'profiles', 'saved')
+
 /*----------  non holochain actions  ----------*/
 
 export const SetCurrentPersona = createAction('holo-vault/SET_CURRENT_PERSONA', resolve => {
