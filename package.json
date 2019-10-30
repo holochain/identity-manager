@@ -12,7 +12,7 @@
     "hc:start": "mkdir -p tmp-storage && holochain -c ./conductor-config.toml",
     "hc:test": "cd dna-src && hc test",
     "prerelease": "rm -rf ./release && cd ui-src && npm run build && cd .. && npm run hc:test && npm run hc:build && mkdir -p ./release && mv ./ui ./release/ui && mv ./dna ./release/dna && cp ./my-conductor-config.toml ./release/my-conductor-config.toml",
-    "holoscape:build": "npm run hc:build:holoscape && cd ui-src && npm run build:holoscape"
+    "holoscape:build": "npm run hc:build:holoscape && cd ui-src && npm run build:holoscape-bundle"
   },
   "repository": {
     "type": "git",

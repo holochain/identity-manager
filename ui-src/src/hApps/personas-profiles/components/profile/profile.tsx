@@ -54,6 +54,7 @@ export interface OwnProps {
 
 export interface DispatchProps {
   save: (profile: ProfileType, newPersonaFields: Array<PersonaField>) => Promise<any>
+  saved: (ui: String, location: String)  => Promise<any>
   getProfiles: typeof GetProfiles.sig
   getPersonas: typeof GetPersonas.sig
   setCurrentPersona: (newCurrentPersona: PersonaType) => void
@@ -134,12 +135,12 @@ class Profile extends React.Component<Props & RouterProps, State> {
     this.props.save(this.state.profile, newPersonaFields)
       .then(this.props.getProfiles)
       .then(() => {
-        if (this.props.returnUrl === '/profiles') {
-          this.props.history.push(this.props.returnUrl)
-        } else {
-          (window as any).activateHappWindow(this.props.returnUrl, ``)
-          // window.location.replace(decodeURIComponent(this.props.returnUrl))
+        if (this.props.returnUrl !== '/profiles') {
+          this.props.saved(this.props.returnUrl, '')
         }
+      })
+      .then(() => {
+        this.props.history.push('/profiles')
       })
       .catch(err => console.log(err))
   }

@@ -100,6 +100,10 @@ pub mod profiles {
         profile::handlers::handle_create_mapping(mapping)
     }
 
+    #[zome_fn("hc_public")]
+    pub fn saved(ui: String, location: String) -> ZomeApiResult<()> {
+        profile::handlers::handle_saved(ui, location)
+    }
 
     #[zome_fn("hc_public")]
     pub fn retrieve(retriever_dna: Address, profile_field: String) -> ZomeApiResult<RawString> {

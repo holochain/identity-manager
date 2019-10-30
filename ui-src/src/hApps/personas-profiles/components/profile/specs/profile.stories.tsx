@@ -30,6 +30,7 @@ storiesOf('Profile', module)
       save: jest.fn(() => Promise.resolve('')),
       getProfiles: mockPromise,
       getPersonas: mockPromise,
+      saved: mockPromise,
       setCurrentPersona: mockFn
     }
     return <MemoryRouter initialEntries={['/']}><Profile {...props} /></MemoryRouter>
@@ -41,6 +42,7 @@ storiesOf('Profile', module)
     let props: Props
     props = {
       returnUrl: '',
+      saved: mockPromise,
       personas: constants.personas,
       selectedPersona: constants.personas[0],
       profile: constants.exampleProfileNotMappedNoDefaults,
@@ -61,6 +63,7 @@ storiesOf('Profile', module)
     let props: Props
     props = {
       returnUrl: '',
+      saved: mockPromise,
       personas: constants.personas,
       selectedPersona: constants.personas[0],
       profile: constants.exampleProfileNotMapped,
@@ -76,6 +79,7 @@ storiesOf('Profile', module)
     let props: Props
     props = {
       returnUrl: '',
+      saved: mockPromise,
       personas: constants.personas,
       selectedPersona: constants.personas[0],
       profile: constants.exampleProfileMappedCorrectly,
@@ -90,6 +94,7 @@ storiesOf('Profile', module)
     let props: Props
     props = {
       returnUrl: '',
+      saved: mockPromise,
       personas: constants.personas,
       selectedPersona: constants.personas[0],
       profile: constants.exampleFaultyProfile,

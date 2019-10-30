@@ -6,6 +6,7 @@ import Profile, { Props, RouterProps, StateProps, DispatchProps } from '../compo
 
 import {
   CreateMapping,
+  Saved,
   GetProfiles,
   GetPersonas,
   AddField,
@@ -82,7 +83,9 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
           return Promise.all(actions)
         })
       )
-
+    },
+    saved: (ui: String, location: String) => {
+      return dispatch(Saved.create({ui: ui, location: location}))
     }
   }
 }
